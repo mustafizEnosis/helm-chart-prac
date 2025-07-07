@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'jenkins-cd', url: 'https://github.com/mustafizEnosis/helm-chart-prac.git' // Replace with your repo URL
+                git branch: 'Jenkins-cd', url: 'https://github.com/mustafizEnosis/helm-chart-prac.git' // Replace with your repo URL
             }
         }
 
