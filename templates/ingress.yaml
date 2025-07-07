@@ -1,16 +1,15 @@
-apiVersion: networking.k8s.io/v1
+apiVersion: {{ include "common.capabilities.ingress.apiVersion" . }}
 kind: Ingress
 metadata:
-  name: ingress-nginx-apps
+  name: {{ include "common.names.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
+  labels: {{- include "common.labels.standard" ( dict "customLabels" .Values.commonLabels "context" $ ) | nindent 4 }}
 spec:
-  ingressClassName: nginx
+  ingressClassName: {{ .Values.ingress.className | quote }}
   rules:
-  - http:
+  - host: {{ .Values.ingress.hostname | quote }}
+    http:
       paths:
-      - backend:
-          service:
-            name: {{ include "common.names.fullname" . }} 
-            port:
-              number: 8080
-        path: /
-        pathType: Prefix
+      - backend: {{- include "common.ingress.backend" (dict "serviceName" (include "common.names.fullname" .) "servicePort" "8080" "context" $)  | nindent 10 }}
+        path: {{ .Values.ingress.path }}
+        pathType: {{ .Values.ingress.pathType }}
