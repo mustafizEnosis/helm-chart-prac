@@ -7,8 +7,7 @@ metadata:
 spec:
   ingressClassName: {{ .Values.ingress.className | quote }}
   rules:
-  - host: {{ .Values.ingress.hostname | quote }}
-    http:
+  - http:
       paths:
       - backend: {{- include "common.ingress.backend" (dict "serviceName" (include "common.names.fullname" .) "servicePort" "8080" "context" $)  | nindent 10 }}
         path: {{ .Values.ingress.path }}
