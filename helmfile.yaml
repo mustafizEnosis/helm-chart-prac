@@ -1,0 +1,9 @@
+releases:
+  - name: nodejs-release
+    chart: ./sample-nodejs-helm
+    installed: true
+    namespace: argocd 
+    values:
+      - global:
+          env:
+            ORG_NAME: "ENOSIS"
