@@ -9,6 +9,6 @@ spec:
   rules:
   - http:
       paths:
-      - backend: {{- include "common.ingress.backend" (dict "serviceName" (include "common.names.fullname" .) "servicePort" "8080" "context" $)  | nindent 10 }}
+      - backend: {{- include "common.ingress.backend" (dict "serviceName" (include "common.names.fullname" .) "servicePort" 8080 "context" $)  | nindent 10 }}
         path: {{ .Values.ingress.path }}
         pathType: {{ .Values.ingress.pathType }}
