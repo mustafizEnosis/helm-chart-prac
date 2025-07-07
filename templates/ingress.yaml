@@ -12,3 +12,5 @@ spec:
             name: {{ include "common.names.fullname" . }} 
             port:
               number: 8080
+        path: /
+        pathType: Prefix

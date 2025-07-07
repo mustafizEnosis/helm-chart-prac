@@ -20,6 +20,9 @@ spec:
           ports:
             - name: http
               containerPort: {{ .Values.containerPorts.http }}
+          env:
+            - name: GLOBAL_ORG_NAME
+              value: {{ .Values.global.env.ORG_NAME | quote }}
       imagePullSecrets:
       {{- range .Values.imagePullSecrets }}
       - name: {{ . }} 
