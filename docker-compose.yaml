@@ -1,0 +1,21 @@
+services:
+  jenkins:
+    image: jenkins/jenkins:lts-jdk17
+    container_name: jenkins
+    user: root
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+      - /usr/bin/kubectl:/usr/bin/kubectl
+      - /usr/sbin/helm:/usr/sbin/helm
+      - /usr/local/bin/helmfile:/usr/local/bin/helmfile
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  jenkins_home:
