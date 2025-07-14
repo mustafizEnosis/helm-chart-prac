@@ -10,6 +10,7 @@ services:
       - /usr/bin/kubectl:/usr/bin/kubectl
       - /usr/sbin/helm:/usr/sbin/helm
       - /usr/local/bin/helmfile:/usr/local/bin/helmfile
+      - ./kube-config.yaml:/root/.kube/config
     ports:
       - "8080:8080"
       - "50000:50000"
