@@ -1,0 +1,3 @@
+creation_rules:
+  - path_regex: secrets/.*\.yaml$
+    pgp: 523DB455D75E4091  # Replace with your GPG key ID
