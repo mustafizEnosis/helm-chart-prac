@@ -145,6 +145,7 @@ affinity: {}
 ingress-nginx:
   controller:
     service:
-      type: ClusterIP
+      type: LoadBalancer
       annotations:
-        cloud.google.com/neg: '{"exposed_ports": {"80":{"name": "ingress-nginx-80-neg-http"}}}'
+            service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+            service.beta.kubernetes.io/aws-load-balancer-internal: "false" # Ensure this line is not set to "true"
