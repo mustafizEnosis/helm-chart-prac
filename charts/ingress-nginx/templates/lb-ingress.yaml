@@ -7,7 +7,7 @@ metadata:
     kubernetes.io/ingress.class: "alb"
     alb.ingress.kubernetes.io/scheme: internet-facing # or internal for private
     alb.ingress.kubernetes.io/target-type: instance # NLB uses 'instance' by default, and this works best for NodePort
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]' # Or just 80 if no SSL at ALB
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]' # Or just 80 if no SSL at ALB
     # Optional: For SSL termination at ALB (recommended)
     # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:<REGION>:<ACCOUNT_ID>:certificate/<CERT_ID>
     # Health checks for the ALB to monitor NGINX

@@ -147,10 +147,9 @@ ingress-nginx:
     service:
       type: LoadBalancer
 
-awsLoadBalancerController:
+aws-load-balancer-controller:
   enabled: true # Enable the subchart (if you used a condition)
   clusterName: "demo-eks" # Required for LBC
   serviceAccount:
-    create: false # Assuming you're managing SA separately with eksctl/terraform
-    name: "aws-load-balancer-controller" # The name of your pre-created service account
+    create: true # Assuming you're managing SA separately with eksctl/terraform
  

@@ -4,6 +4,9 @@ dependencies:
   version: 2.31.3
 - name: ingress-nginx
   repository: https://kubernetes.github.io/ingress-nginx
-  version: 4.12.3
-digest: sha256:3cce69c984d3f66eca4f2385023a70f333ba8105a8e00e8019e7e1d77d485130
-generated: "2025-07-04T20:49:51.644252517+06:00"
+  version: 4.13.0
+- name: aws-load-balancer-controller
+  repository: https://aws.github.io/eks-charts
+  version: 1.13.3
+digest: sha256:995984ab957705a21aa5701aae993e1ccfe806a75cfa7f5d72930dcca4ffa1fe
+generated: "2025-07-28T15:16:57.368858832Z"
