@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-public-alb-for-nginx
+  annotations:
+    # Essential for ALB Ingress Controller
+    kubernetes.io/ingress.class: "alb"
+    alb.ingress.kubernetes.io/scheme: internet-facing # or internal for private
+    alb.ingress.kubernetes.io/target-type: instance # NLB uses 'instance' by default, and this works best for NodePort
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]' # Or just 80 if no SSL at ALB
+    # Optional: For SSL termination at ALB (recommended)
+    # alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:<REGION>:<ACCOUNT_ID>:certificate/<CERT_ID>
+    # Health checks for the ALB to monitor NGINX
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP
+    alb.ingress.kubernetes.io/healthcheck-port: traffic-port # Use the listener port, or the NGINX NodePort
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: '15'
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '5'
+    alb.ingress.kubernetes.io/healthy-threshold-count: '2'
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
+spec:
+  rules:
+  - http:
+      paths:
+      - path: / # ALB will forward all traffic to NGINX
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ include "ingress-nginx.controller.fullname" . }} # Name of your NGINX Ingress Controller Service
+            port:
+              number: 80 # Or 443, matching the NGINX Service's exposed port
+                           # The LBC knows to use the NodePort behind this
