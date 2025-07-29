@@ -30,7 +30,7 @@ dependencies:
   version: "1.x.x" # Specify the desired version, e.g., "1.6.2" or "~1.6.0" for version range
   repository: "https://aws.github.io/eks-charts"
 - name: aws-cloudwatch-metrics # This is the CloudWatch Agent Helm chart
-  version: 1.2.0              # Check for the latest version from aws.github.io/eks-charts
+  version: 0.0.11              # Check for the latest version from aws.github.io/eks-charts
   repository: https://aws.github.io/eks-charts
   alias: cloudwatch-agent   # Alias to simplify referencing in values.yaml and prevent name collisions
 - name: aws-for-fluent-bit # This is the Fluent Bit Helm chart optimized for AWS
