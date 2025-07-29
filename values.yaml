@@ -153,3 +153,52 @@ aws-load-balancer-controller:
   serviceAccount:
     create: true # Assuming you're managing SA separately with eksctl/terraform
  
+
+cloudwatch-agent:
+  enabled: true # Ensure the subchart is enabled
+  serviceAccount:
+    create: true # Helm chart will create the ServiceAccount
+  clusterName: "demo-eks" # Replace with your EKS cluster name
+  image:
+    tag: 1.247358.0 # Specify CloudWatch Agent image version
+  # Metrics collection configuration (example, customize as needed)
+  config: |
+    {
+      "logs": {
+        "metrics_collected": {
+          "kubernetes": {
+            "cluster_name": "demo-eks",
+            "metrics_collection_interval": 60
+          }
+        },
+        "log_stream_name": "{container_name}-{pod_name}"
+      }
+    }
+
+fluent-bit:
+  enabled: true # Ensure the subchart is enabled
+  serviceAccount:
+    create: true # Helm chart will create the ServiceAccount
+  clusterName: "demo-eks" # Replace with your EKS cluster name
+  image:
+    tag: 2.18.0 # Specify Fluent Bit image version
+  # Fluent Bit configuration for CloudWatch Logs (example)
+  config:
+    outputs: |
+      [OUTPUT]
+          Name              cloudwatch
+          Match             *
+          Region            us-east-1 # e.g., us-east-1
+          Log_Group_Name    /aws/containerinsights/demo-eks/application
+          Log_Stream_Name   {kubernetes_pod_name}
+          Auto_Create_Group true
+    # Input configuration (example)
+    inputs: |
+      [INPUT]
+          Name              tail
+          Path              /var/log/containers/*.log
+          Parser            docker
+          Tag               kube.*
+          Exclude_Path      /var/log/containers/cloudwatch-agent*,/var/log/containers/fluent-bit*
+          DB                /var/log/flb_kube.db
+          Mem_Buf_Limit     5MB
