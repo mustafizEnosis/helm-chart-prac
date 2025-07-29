@@ -34,7 +34,7 @@ dependencies:
   repository: https://aws.github.io/eks-charts
   alias: cloudwatch-agent   # Alias to simplify referencing in values.yaml and prevent name collisions
 - name: aws-for-fluent-bit # This is the Fluent Bit Helm chart optimized for AWS
-  version: 0.1.20           # Check for the latest version from aws.github.io/eks-charts
+  version: 0.1.35           # Check for the latest version from aws.github.io/eks-charts
   repository: https://aws.github.io/eks-charts
   alias: fluent-bit         # Alias to simplify referencing
 # This is the version number of the application being deployed. This version number should be
