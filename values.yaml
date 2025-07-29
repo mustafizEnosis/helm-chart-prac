@@ -160,7 +160,7 @@ cloudwatch-agent:
     create: true # Helm chart will create the ServiceAccount
   clusterName: "demo-eks" # Replace with your EKS cluster name
   image:
-    tag: 1.247358.0 # Specify CloudWatch Agent image version
+    tag: latest # Specify CloudWatch Agent image version
   # Metrics collection configuration (example, customize as needed)
   config: |
     {
