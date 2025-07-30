@@ -154,51 +154,50 @@ aws-load-balancer-controller:
     create: true # Assuming you're managing SA separately with eksctl/terraform
  
 
-cloudwatch-agent:
-  enabled: true # Ensure the subchart is enabled
-  serviceAccount:
-    create: true # Helm chart will create the ServiceAccount
-  clusterName: "demo-eks" # Replace with your EKS cluster name
-  image:
-    tag: latest # Specify CloudWatch Agent image version
-  # Metrics collection configuration (example, customize as needed)
-  config: |
-    {
-      "logs": {
-        "metrics_collected": {
-          "kubernetes": {
-            "cluster_name": "demo-eks",
-            "metrics_collection_interval": 60
-          }
-        },
-        "log_stream_name": "{container_name}-{pod_name}"
-      }
-    }
+datadog:
+  # Global settings for the Datadog Agent
+  global:
+    # Replace <YOUR_DATADOG_SITE> with your Datadog site (e.g., datadoghq.com, us3.datadoghq.com, eu.datadoghq.com)
+    site: datadoghq.com
+    clusterName: "demo-eks" # Recommended for EKS to ensure proper cluster identification
 
-fluent-bit:
-  enabled: true # Ensure the subchart is enabled
-  serviceAccount:
-    create: true # Helm chart will create the ServiceAccount
-  clusterName: "demo-eks" # Replace with your EKS cluster name
-  image:
-    tag: 2.18.0 # Specify Fluent Bit image version
-  # Fluent Bit configuration for CloudWatch Logs (example)
-  config:
-    outputs: |
-      [OUTPUT]
-          Name              cloudwatch
-          Match             *
-          Region            us-east-1 # e.g., us-east-1
-          Log_Group_Name    /aws/containerinsights/demo-eks/application
-          Log_Stream_Name   {kubernetes_pod_name}
-          Auto_Create_Group true
-    # Input configuration (example)
-    inputs: |
-      [INPUT]
-          Name              tail
-          Path              /var/log/containers/*.log
-          Parser            docker
-          Tag               kube.*
-          Exclude_Path      /var/log/containers/cloudwatch-agent*,/var/log/containers/fluent-bit*
-          DB                /var/log/flb_kube.db
-          Mem_Buf_Limit     5MB
+  # API and App Keys (stored in a Kubernetes Secret, best practice)
+  # Ensure you create this secret beforehand:
+  # kubectl create secret generic datadog-secret --from-literal api-key=<YOUR_DATADOG_API_KEY> --from-literal app-key=<YOUR_DATADOG_APP_KEY>
+  apiSecret:
+    secretName: datadog-secret
+    keyName: api-key
+  appSecret:
+    secretName: datadog-secret
+    keyName: app-key
+
+  # Enable/Disable various Datadog Agent features
+  features:
+    logCollection:
+      enabled: true
+    apm:
+      enabled: true
+    processAgent:
+      enabled: true
+    orchestratorExplorer:
+      enabled: true # Recommended for Kubernetes monitoring
+
+  # Agent and Cluster Agent specific configurations
+  agent:
+    image:
+      # Optional: specify a particular Datadog Agent image version if needed
+      # tag: 7.50.0 # Example tag, always use the latest compatible version
+      pullPolicy: IfNotPresent
+    # Add any other agent-specific configurations here (e.g., resources, tolerations)
+    # resources:
+    #   requests:
+    #     cpu: 100m
+    #     memory: 256Mi
+    #   limits:
+    #     cpu: 200m
+    #     memory: 512Mi
+
+  clusterAgent:
+    enabled: true
+    image:
+      pullPolicy: IfNotPresent
