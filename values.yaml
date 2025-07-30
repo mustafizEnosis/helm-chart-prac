@@ -170,5 +170,7 @@ datadog:
 
   clusterAgent:
     enabled: true
+    metricsProvider:
+      enabled: false
     image:
       pullPolicy: IfNotPresent
