@@ -154,7 +154,9 @@ aws-load-balancer-controller:
     create: true # Assuming you're managing SA separately with eksctl/terraform
  
 datadog:
-  apiKeyExistingSecret: datadog-secret
+  apiKey: c77b361dfeff1423ec20c9330e5866da
+  appKey: 9b3f1ee982d638c59679101193210ea77b41ec62
+  enabled: true
   site: datadoghq.com
   serviceMonitoring:
     enabled: true
