@@ -188,3 +188,5 @@ fluentd-cloudwatch:
             auto_create_group true
           </match>
         </label>
+  plugins:
+  - fluent-plugin-cloudwatch-logs
