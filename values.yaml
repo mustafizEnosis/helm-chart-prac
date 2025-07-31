@@ -158,6 +158,7 @@ datadog:
   appKey: 9b3f1ee982d638c59679101193210ea77b41ec62
   enabled: true
   site: datadoghq.com
+  clusterName: "demo-eks"
   serviceMonitoring:
     enabled: true
   networkMonitoring:
