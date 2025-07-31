@@ -33,10 +33,10 @@ dependencies:
   version: 0.0.11              # Check for the latest version from aws.github.io/eks-charts
   repository: https://aws.github.io/eks-charts
   alias: cloudwatch-agent   # Alias to simplify referencing in values.yaml and prevent name collisions
-- name: aws-for-fluent-bit # This is the Fluent Bit Helm chart optimized for AWS
-  version: 0.1.35           # Check for the latest version from aws.github.io/eks-charts
-  repository: https://aws.github.io/eks-charts
-  alias: fluent-bit         # Alias to simplify referencing
+- name: fluentd
+  version: 0.5.3  # Use the latest version from the Fluentd repo or a custom one
+  repository: "https://fluent.github.io/helm-charts"
+  alias: fluentd-cloudwatch # Alias to avoid conflicts with other charts
 # This is the version number of the application being deployed. This version number should be
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
