@@ -178,13 +178,13 @@ cloudwatch-agent:
 fluentd-cloudwatch:
   fileConfigs:
       04_outputs.conf: |-
-      <label @OUTPUT>
-        <match **>
-          @type cloudwatch_logs
-          @id out_cloudwatch_logs
-          region us-east-1
-          log_group_name /aws/eks/demo-eks/application
-          log_stream_name fluentd
-          auto_create_group true
-        </match>
-      </label>
+        <label @OUTPUT>
+          <match **>
+            @type cloudwatch_logs
+            @id out_cloudwatch_logs
+            region us-east-1
+            log_group_name /aws/eks/demo-eks/application
+            log_stream_name fluentd
+            auto_create_group true
+          </match>
+        </label>
